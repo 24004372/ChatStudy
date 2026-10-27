@@ -77,61 +77,55 @@ Client-server chat applications are versatile tools that facilitate real-time co
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
 
 ## PROGRAM:
-### client:
-```python
 
-import socket
-
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-client.connect(("localhost", 9999))
-
-done=False
-
-while not done:
-    client.send(input("Message ").encode('utf-8'))
-    msg = client.recv(1024).decode('utf-8')
-
-    if msg == 'quit':
-        done=True
-    else:
-        print(msg)
-
-
-
-client.close()
-
+server.py
 ```
-### server
-```python
+
 import socket
-from base64 import decode
-from operator import truediv
 
-server =socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('localhost', 9999))
-server.listen()
-client,addr=server.accept()
+host = '127.0.0.1'   
+port = 5000          
 
-done = False
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.bind((host, port))
+server_socket.listen(1)
 
-while not done:
-    msg = client.recv(1024).decode('utf-8')
+print("Server is listening on", host, ":", port)
+conn, addr = server_socket.accept()
+print("Connection from:", addr)
 
-    if msg == 'quit':
-        done = True
-    else:
-        print(msg)
+while True:
+    data = conn.recv(1024).decode()
+    if not data:
+        break
+    print("Client:", data)
+    message = input("Server: ")
+    conn.send(message.encode())
 
-    client.send(input("Message ").encode('utf-8'))
+conn.close()
+```
+client.py
+```
+import socket
 
+host = '127.0.0.1'  
+port = 5000
 
-client.close()
-server.close()
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_socket.connect((host, port))
+
+while True:
+    message = input("Client: ")
+    client_socket.send(message.encode())
+    data = client_socket.recv(1024).decode()
+    print("Server:", data)
+
+client_socket.close()
 ```
 
 ## OUTPUT:
-![image](https://github.com/user-attachments/assets/3387a89a-890f-4322-900f-9aed4ceee866)
+<img width="1315" height="343" alt="image" src="https://github.com/user-attachments/assets/3d2786f9-ab7f-4dc3-9ecc-898341d6a07a" />
+
 
 
 
