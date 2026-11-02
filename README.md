@@ -1,5 +1,5 @@
-# Ex. No:1b 			Study of Client Server Chat Applications
-
+# Ex. No:1b     Study of Client Server Chat Applications
+## Date:24/10/26
 ## Name:SHRIRAM VR
 ## Register number:212224040314
 
